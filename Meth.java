@@ -44,7 +44,7 @@ class Meth {
 	                res[i][j] = modAdd( res[i][j], modProduct( a[i][k], b[k][j] ) );
 	    return res;
 	}
-	
+
 	// PRIME ----------------------------------
 	
 	static long nextPrime(long n) {
@@ -91,6 +91,7 @@ class Meth {
 			return res; 
 	} 
 
+	// -------------------------------------
 	static long modPow2(long x, long y) 
 	{ 
 			long res = 1;      
@@ -103,7 +104,27 @@ class Meth {
 					x = multiplication(x, x);
 			} 
 			return res; 
+	}
+	static long multiplication(long a, long b) {
+			long result = 0;
+			a = a % P;
+			while (b > 0) {
+					if((b & 1) == 1) {
+							result = (result + a) % P;
+					}
+					a = (a << 1) % P;
+					b >>= 1;
+			}
+			return result;
 	} 
+	//------------------------------------------
+
+	// when p is Prime
+	static long mmi1(long n) {
+		return modPow1(n, p-2);
+	}
+
+	// TODO when n and p are co-primes: mmi2(n)
 
 	static long modProduct(long... a) {
 		long sum = 1;
@@ -123,18 +144,7 @@ class Meth {
 		return sum;
 	}
 
-	static long multiplication(long a, long b) {
-			long result = 0;
-			a = a % P;
-			while (b > 0) {
-					if((b & 1) == 1) {
-							result = (result + a) % P;
-					}
-					a = (a << 1) % P;
-					b >>= 1;
-			}
-			return result;
-	}
+	
 
 	static int min(int a, int b) { return a<b ? a : b; }
 	static long min(long a, long b) { return a<b ? a : b; }

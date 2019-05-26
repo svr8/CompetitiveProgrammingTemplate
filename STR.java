@@ -86,3 +86,63 @@ class STR {
     System.out.println(list2);
   }
 }
+/* PALINDROME QUERIES -------------------------------
+   dependency: Meth
+*/
+class Palindrome {
+
+  char[] str;
+  int n;
+
+  long[] power;
+  long[] prefix;
+  long[] suffix;
+  long MOD;
+
+  Palindrome(char[] str) {
+    this.str = str;
+    n = str.length;
+    prefix = new long[n+1];
+    suffix = new long[n+1];
+    power = new long[n+1];
+    MOD = (long)1e9 + 7;
+  }
+
+  // inclusive range: l,r
+  boolean isPalindrome(int l, int r) {
+    while(r>l)
+      if(str[l++] != str[r--])
+        return false;
+    return true;
+  }
+
+  // use class Meth for modPow1m, mmi1
+
+  void computePrefixHash() {
+    prefix[0] = 0;
+    prefix[1] = str[1];
+
+    for(int i=2;i<=n;i++)
+      prefix[i] = (prefix[i-1]%MOD + (str[i-1]%MOD * power[i-1]%MOD)%MOD)%MOD; 
+  }
+
+  void computeSuffixHash() { 
+    suffix[0] = 0; 
+    suffix[1] = str[n-1]; 
+
+    for (int i=n-2, j=2; i>=0 && j<=n; i--,j++) 
+      suffix[j] = (suffix[j-1]%MOD + (str[i]%MOD * power[j-1]%MOD)%MOD)%MOD; 
+  } 
+
+  boolean hashCheckPalindrome(int L, int R) {
+    long hash_LR = ((prefix[R+1]-prefix[L]+MOD)%MOD * Meth.mmi1(power[L])%MOD)%MOD; 
+    long reverse_hash_LR = ((suffix[n-L]-suffix[n-R-1]+MOD)%MOD * Meth.mmi1(power[n-R-1])%MOD)%MOD; 
+
+    if(hash_LR == reverse_hash_LR) {
+      return isPalindrome(L, R);
+    }
+
+    return false;
+  }
+
+}

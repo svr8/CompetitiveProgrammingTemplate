@@ -1,5 +1,9 @@
 import java.util.*;
 
+/*
+  T : data type of weight
+  n : number of nodes
+*/
 class AdjacencyMatrix<T> {
   int n;
   T[][] graph;
@@ -25,6 +29,10 @@ class AdjacencyMatrix<T> {
   }
 }
 
+/*
+  T: data type of vertex
+  U: data type of weight
+*/
 class AdjacencyGraph<T, U> {
   HashMap<T, HashMap<T, U>> graph;
 
