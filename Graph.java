@@ -33,10 +33,10 @@ class AdjacencyMatrix<T> {
   T: data type of vertex
   U: data type of weight
 */
-class AdjacencyGraph<T, U> {
+class AdjacencyMap<T, U> {
   HashMap<T, HashMap<T, U>> graph;
 
-  AdjacencyGraph() {
+  AdjacencyMap() {
     graph = new HashMap<>();
   }
 
@@ -58,5 +58,52 @@ class AdjacencyGraph<T, U> {
     if(edgeList1 == null)
       return null;
     return edgeList1.get(v2);     
+  }
+}
+
+/*
+  T: data type of node data
+*/
+class TreeNode {
+  // Node details
+
+  Vector<TreeNode> children;
+  int bfsRank;
+
+  TreeNode() {
+    children = new Vector<>();
+  }
+
+  void addChild(TreeNode child) {
+    children.add(child);
+  }
+
+  void bfs(TreeNode root) {
+
+    PriorityQueue<TreeNode> q = new PriorityQueue<>(0, new Comparator<TreeNode>(){
+      @Override
+      public int compare(TreeNode a, TreeNode b) {
+        a.bfsRank-b.bfsRank;
+        return -1;
+      }
+    });
+
+    TreeNode cur, nextEl;
+    Iterator childIterator;
+    q.add(root);
+
+    while(q.size()>0) {
+      cur = (TreeNode) q.poll();
+
+      //EDIT
+      
+      childIterator = cur.children.iterator();
+      while(childIterator.hasNext()) {
+        nextEl = (TreeNode)child.next();
+        nextEl.bfsRank = cur.bfsRank+1;
+        q.add(nextEl);
+      }      
+    }
+
   }
 }

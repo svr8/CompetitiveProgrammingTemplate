@@ -121,10 +121,41 @@ class Meth {
 
 	// when p is Prime
 	static long mmi1(long n) {
-		return modPow1(n, p-2);
+		return modPow1(n, P-2);
 	}
 
-	// TODO when n and p are co-primes: mmi2(n)
+	
+	// when n and p are co-primes: mmi2(n)
+	static long mmi2(long a, long m) 
+    { 
+        long m0 = m; 
+        long y = 0, x = 1; 
+        if (m == 1) return 0; 
+
+        while (a > 1) 
+        { 
+            long q = a / m; 
+            long t = m; 
+            m = a % m; 
+            a = t; 
+            t = y; 
+            y = x - q * y; 
+            x = t; 
+        } 
+        if (x < 0) x += m0; 
+        
+        return x; 
+    } 
+
+	static long modDivide(int a, int b) 
+	{ 
+		a = a % P;
+		long inv;
+		if(isPrime(P)) inv = mmi1(b);
+		else inv = mmi2(b, P); 
+		if(inv == -1) return -1; 
+		else return modProduct(a, inv);
+	} 
 
 	static long modProduct(long... a) {
 		long sum = 1;
