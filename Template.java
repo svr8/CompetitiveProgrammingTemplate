@@ -254,4 +254,12 @@ class IO {
 		for(int i=0;i<n;i++) a[i] = nextDouble();
 		return a;
 	}
+
+	String[] nextStringArray(int n)throws IOException {
+    String[] arr = new String[n];
+    for(int i=0;i<n;i++)
+      arr[i] = next();
+    
+    return arr;
+  }
 }
