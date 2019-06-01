@@ -147,12 +147,17 @@ class Meth {
         return x; 
     } 
 
-	static long modDivide(int a, int b) 
+	static long modDivide(long a, long b) 
 	{ 
 		a = a % P;
 		long inv;
-		if(isPrime(P)) inv = mmi1(b);
-		else inv = mmi2(b, P); 
+
+		// if P is prime
+		inv = mmi1(b);
+
+		// else if b, P are co-prime
+		// inv = mmi2(b, P);
+		
 		if(inv == -1) return -1; 
 		else return modProduct(a, inv);
 	} 

@@ -17,7 +17,6 @@ class Template {
 	}
 }
 	
-
 class Meth {
 
 	static long P = (long)1e9 + 7;
@@ -64,7 +63,7 @@ class Meth {
 	                res[i][j] = modAdd( res[i][j], modProduct( a[i][k], b[k][j] ) );
 	    return res;
 	}
-	
+
 	// PRIME ----------------------------------
 	
 	static long nextPrime(long n) {
@@ -111,6 +110,7 @@ class Meth {
 			return res; 
 	} 
 
+	// -------------------------------------
 	static long modPow2(long x, long y) 
 	{ 
 			long res = 1;      
@@ -123,6 +123,62 @@ class Meth {
 					x = multiplication(x, x);
 			} 
 			return res; 
+	}
+	static long multiplication(long a, long b) {
+			long result = 0;
+			a = a % P;
+			while (b > 0) {
+					if((b & 1) == 1) {
+							result = (result + a) % P;
+					}
+					a = (a << 1) % P;
+					b >>= 1;
+			}
+			return result;
+	} 
+	//------------------------------------------
+
+	// when p is Prime
+	static long mmi1(long n) {
+		return modPow1(n, P-2);
+	}
+
+	
+	// when n and p are co-primes: mmi2(n)
+	static long mmi2(long a, long m) 
+    { 
+        long m0 = m; 
+        long y = 0, x = 1; 
+        if (m == 1) return 0; 
+
+        while (a > 1) 
+        { 
+            long q = a / m; 
+            long t = m; 
+            m = a % m; 
+            a = t; 
+            t = y; 
+            y = x - q * y; 
+            x = t; 
+        } 
+        if (x < 0) x += m0; 
+        
+        return x; 
+    } 
+
+	static long modDivide(long a, long b) 
+	{ 
+		a = a % P;
+		long inv;
+
+		// if P is prime
+		inv = mmi1(b);
+
+		// else if b, P are co-prime
+		// inv = mmi2(b, P);
+		
+		if(inv == -1) return -1; 
+		else return modProduct(a, inv);
 	} 
 
 	static long modProduct(long... a) {
@@ -143,18 +199,7 @@ class Meth {
 		return sum;
 	}
 
-	static long multiplication(long a, long b) {
-			long result = 0;
-			a = a % P;
-			while (b > 0) {
-					if((b & 1) == 1) {
-							result = (result + a) % P;
-					}
-					a = (a << 1) % P;
-					b >>= 1;
-			}
-			return result;
-	}
+	
 
 	static int min(int a, int b) { return a<b ? a : b; }
 	static long min(long a, long b) { return a<b ? a : b; }
