@@ -23,6 +23,7 @@ class Meth {
 
 	// MATRIX ----------------------------------
 	
+	// a*r^0 + a*r^1 + ... a*r^n
 	static long gp_sum(long a, long r, long n) {
 	    long[][] x = { {a, a}};
 	    long[][] m = {
@@ -143,18 +144,17 @@ class Meth {
 		return modPow1(n, P-2);
 	}
 
-	
 	// when n and p are co-primes: mmi2(n)
 	static long mmi2(long a, long m) 
     { 
         long m0 = m; 
         long y = 0, x = 1; 
         if (m == 1) return 0; 
-
-        while (a > 1) 
-        { 
-            long q = a / m; 
-            long t = m; 
+		
+		long q, t;
+        while (a > 1) { 
+            q = a / m; 
+            t = m; 
             m = a % m; 
             a = t; 
             t = y; 
@@ -166,8 +166,7 @@ class Meth {
         return x; 
     } 
 
-	static long modDivide(long a, long b) 
-	{ 
+	static long modDivide(long a, long b) { 
 		a = a % P;
 		long inv;
 
@@ -198,8 +197,6 @@ class Meth {
 		
 		return sum;
 	}
-
-	
 
 	static int min(int a, int b) { return a<b ? a : b; }
 	static long min(long a, long b) { return a<b ? a : b; }
