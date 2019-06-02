@@ -6,7 +6,7 @@ class Template {
 		IO io = new IO();
 		StringBuilder out = new StringBuilder("");
 
-		int t = io.nextInt();
+		int t = io.ni();
 		
 		while(t-->0) {
 			
@@ -225,7 +225,7 @@ class IO {
 		st = new StringTokenizer(br.readLine());
 	}
 
-	String next()throws IOException {
+	String n()throws IOException {
 		if(st.hasMoreTokens())
 			return st.nextToken();
 
@@ -233,32 +233,32 @@ class IO {
 		return st.nextToken();
 	}
 
-	int nextInt()throws IOException { return Integer.parseInt(next()); }
-	double nextDouble()throws IOException { return Double.parseDouble(next()); }
-	long nextLong()throws IOException { return Long.parseLong(next()); }
+	int ni()throws IOException { return Integer.parseInt(n()); }
+	double nd()throws IOException { return Double.parseDouble(n()); }
+	long nl()throws IOException { return Long.parseLong(n()); }
 
-	int[] nextIntArray(int n)throws IOException { 
+	int[] nia(int n)throws IOException { 
 		int[] a = new int[n];
-		for(int i=0;i<n;i++) a[i] = nextInt();
+		for(int i=0;i<n;i++) a[i] = ni();
 		return a;
 	}
 
-	long[] nextLongArray(int n)throws IOException {
+	long[] nla(int n)throws IOException {
 		long[] a = new long[n];
-		for(int i=0;i<n;i++) a[i] = nextLong();
+		for(int i=0;i<n;i++) a[i] = nl();
 		return a;
 	}
 
-	double[] nextDoubleArray(int n)throws IOException {
+	double[] nda(int n)throws IOException {
 		double[] a = new double[n];
-		for(int i=0;i<n;i++) a[i] = nextDouble();
+		for(int i=0;i<n;i++) a[i] = nd();
 		return a;
 	}
 
-	String[] nextStringArray(int n)throws IOException {
+	String[] nsa(int n)throws IOException {
     String[] arr = new String[n];
     for(int i=0;i<n;i++)
-      arr[i] = next();
+      arr[i] = n();
     
     return arr;
   }
