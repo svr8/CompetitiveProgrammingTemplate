@@ -61,11 +61,8 @@ class AdjacencyMap<T, U> {
   }
 }
 
-/*
-  T: data type of node data
-*/
 class TreeNode {
-  // Node details
+  // INSERT Node details
 
   Vector<TreeNode> children;
   int bfsRank;
@@ -83,8 +80,7 @@ class TreeNode {
     PriorityQueue<TreeNode> q = new PriorityQueue<>(0, new Comparator<TreeNode>(){
       @Override
       public int compare(TreeNode a, TreeNode b) {
-        a.bfsRank-b.bfsRank;
-        return -1;
+        return a.bfsRank-b.bfsRank;
       }
     });
 
@@ -95,15 +91,26 @@ class TreeNode {
     while(q.size()>0) {
       cur = (TreeNode) q.poll();
 
-      //EDIT
+      //PROCESS NODE
       
       childIterator = cur.children.iterator();
       while(childIterator.hasNext()) {
-        nextEl = (TreeNode)child.next();
+        nextEl = (TreeNode)childIterator.next();
         nextEl.bfsRank = cur.bfsRank+1;
         q.add(nextEl);
       }      
     }
+  }
 
+  void dfs(TreeNode root) {
+    if(children.size()==0) {
+      return;
+    }
+
+    // PROCESS NODE
+
+    Iterator childIterator = children.iterator();
+    while(childIterator.hasNext())
+      dfs((TreeNode)childIterator.next());
   }
 }
