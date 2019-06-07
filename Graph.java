@@ -103,14 +103,11 @@ class TreeNode {
   }
 
   void dfs(TreeNode root) {
-    if(children.size()==0) {
-      return;
+    Iterator childIterator = children.iterator();
+    while(childIterator.hasNext()) {
+      dfs((TreeNode)childIterator.next());
+      
     }
 
-    // PROCESS NODE
-
-    Iterator childIterator = children.iterator();
-    while(childIterator.hasNext())
-      dfs((TreeNode)childIterator.next());
   }
 }
