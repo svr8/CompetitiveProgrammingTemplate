@@ -174,7 +174,10 @@ class Meth {
 	static long modAdd(long... a) {
 		long sum = 0;
 		for(long x : a) {
-			sum = ( (sum%P) + (x%P) )%P;
+			if(x>0)
+				sum = ( (sum%P) + (x%P) )%P;
+			else
+				sum = ( (sum%P) +(x%P) + P)%P;
 		}
 		
 		return sum;
