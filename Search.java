@@ -37,8 +37,8 @@ class Search {
       else high=mid-1;      
     }
 
-    if(a[low]<=key) return low;
     if(a[high]<=key) return high;
+    if(a[low]<=key) return low;
     return -1;
   }
 
@@ -51,8 +51,8 @@ class Search {
       else high=mid-1;      
     }
 
-    if(a[low]<key) return low;
     if(a[high]<key) return high;
+    if(a[low]<key) return low;
     return -1;
   }
 }

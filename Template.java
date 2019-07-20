@@ -220,16 +220,11 @@ class IO {
 	private BufferedReader br;
 	private StringTokenizer st;
 
-	IO()throws IOException {
-		br = new BufferedReader(new InputStreamReader(System.in));
-		st = new StringTokenizer(br.readLine());
-	}
-
 	String n()throws IOException {
-		if(st.hasMoreTokens())
-			return st.nextToken();
-
-		st = new StringTokenizer(br.readLine());
+    if(br == null) 
+      br = new BufferedReader(new InputStreamReader(System.in));
+    if(st == null || !st.hasMoreTokens())
+      st = new StringTokenizer(br.readLine());
 		return st.nextToken();
 	}
 

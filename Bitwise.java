@@ -1,6 +1,6 @@
 class Bitwise {
-  static long getSetBitCount(long n) {
-		long count = 0;
+  static int getSetBitCount(long n) {
+		int count = 0;
 		while(n!=0) {
 			n &= n-1;
 			count++;
@@ -15,7 +15,7 @@ class Bitwise {
 	}
 
 	// starting from LSB, first bit index is 0
-	static int getBit(long n, int bitIndex) {
+	static long getBit(long n, int bitIndex) {
 		while(bitIndex-->0) n = n>>1;
 		return n&1;
 	}
