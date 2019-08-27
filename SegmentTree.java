@@ -24,13 +24,14 @@ class SegmentTree {
 			propogate();
 		if(totalOverlap(start, end)) {
 			return val;
-		} else if(partialOverlap(start, end)) {
+		} else if(noOverlap(start, end)) {
+		    return 0;
+		}
+        else {
 			long x = left.rangeSum(start, end);
 			long y = right.rangeSum(start, end);
 			return x+y;
 		}
-		else 
-			return 0;
 	}
 
 	void rangeUpdate(int start, int end, long delta) {
@@ -40,7 +41,10 @@ class SegmentTree {
 			if(left!=null) left.lazyUpdate(delta);
 			if(right!=null) right.lazyUpdate(delta);
 			val += delta*(segEnd-segStart+1);
-		} else if(partialOverlap(start, end)) {
+		} else if(noOverlap(start, end)) {
+		    
+		}
+		else {
 			left.rangeUpdate(start, end, delta);
 			right.rangeUpdate(start, end, delta);
 			val = left.val + right.val;
@@ -66,9 +70,8 @@ class SegmentTree {
 	boolean totalOverlap(int queryStart, int queryEnd) {
 		return queryStart<=segStart && segEnd<=queryEnd;
 	}
-	boolean partialOverlap(int queryStart, int queryEnd) {
-		return ( segStart<=queryStart && queryStart<=segEnd ) ||
-				   ( queryStart<=segStart && segStart<=queryEnd ) ||
-					 ( segStart<=queryStart && queryEnd<=segEnd );
+	
+	boolean noOverlap(int queryStart, int queryEnd) {
+	    return queryEnd<segStart || queryStart>segEnd;
 	}
 }

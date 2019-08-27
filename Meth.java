@@ -1,35 +1,116 @@
 class Meth {
 
 	static long P = (long)1e9 + 7;
+	
+  // Number Theory ---------------------------
+    
+  // nPr
+  static long nPr(long n, long k) { 
+    long Fn = 1, Fk = 1; 
+      
+    for (long i = 1; i <= n; i++) { 
+      Fn *= i; 
+      if (i == n - k) 
+        Fk = Fn; 
+    } 
+    long coeff = Fn / Fk; 
+    return coeff; 
+  }
+	
+	// nCr
+	static long nCr(long n, long r) { 
+    long res = 1; 
+    if (r>n-r)  r = n-r; 
+    for (int i = 0; i < r; ++i) { 
+        res *= (n - i); 
+        res /= (i + 1); 
+    } 
+
+    return res; 
+  }
+
+  // nCr[]
+  static long[] nCrList(int n, int k) { 
+    long C[] = new long[k + 1]; 
+    C[0] = 1;   
+    for (int i = 1; i <= n; i++) { 
+        for (int j = Meth.min(i, k); j > 0; j--) 
+            C[j] = (C[j] + C[j-1])%P; 
+    } 
+    return C; 
+  }
+    
+    // nCr % p
+    static int nCrModP(int n, int r, int p) { 
+      int[] C=new int[r+1]; 
+      C[0] = 1; 
+      for (int i = 1; i <= n; i++) { 
+          for (int j = Math.min(i, r); j > 0; j--) 
+              C[j] = (C[j] + C[j-1])%p; 
+      } 
+      return C[r]; 
+    } 
+  
+  // nCr % p (USING LUCAS THEOREM)
+  static int nCrModpLucas(int n, int r, int p) { 
+    if (r==0) 
+        return 1; 
+    int ni = n%p; 
+    int ri = r%p; 
+    return (nCrModpLucas(n/p, r/p, p) * 
+            nCrModP(ni, ri, p)) % p; 
+  }
 
 	// MATRIX ----------------------------------
 	
-	static long gp_sum(long a, long r, long n) {
-	    long[][] x = { {a, a}};
-	    long[][] m = {
-	       {a, 0},
-	       {r, r}
-	    };
-	    
-	    long[][] m_pow = matrix_pow(m, n);
-	    long[][] res = matrix_mul(x, m_pow);
-
-	    return res[0][0];
-	}
+	// nth term of fibonacci, n=0 indicates first term
+    static long fibonacci(long a0, long a1, long n) {
+        n--;
+        long[][] m0 = new long[][] {
+            {a0, a1, a0+a1}
+        };
+        if(n<3) return m0[0][(int)n];
+        
+        long[][] m = new long[][] {
+            {0, 0, 0},
+            {1, 0, 1},
+            {0, 1, 1}
+        };
+        
+        long[][] mk = matrix_pow(m, n-2);
+        long[][] res = matrix_mul(m0, mk);
+        
+        return res[0][2];
+    }
 	
+	// GP sum of n+1 terms:
+  // a*r^0 + a*r^1 + ... a*r^n
+  static long gp_sum(long a, long r, long n) {
+      long[][] x = { {a, a}};
+      long[][] m = {
+          {a, 0},
+          {r, r}
+      };
+      
+      long[][] m_pow = matrix_pow(m, n);
+      long[][] res = matrix_mul(x, m_pow);
+
+      return res[0][0];
+  }
+    
 	static long[][] matrix_pow(long[][] a, long pow) {
     
-        long[][] res = new long[a[0].length][a[0].length];
-        for(int i=0;i<a.length;i++) res[i][i] = 1;
+    long[][] res = new long[a[0].length][a[0].length];
+    for(int i=0;i<a.length;i++) res[i][i] = 1;
         
-	    while( pow>0 ) {
-	        if( (pow&1)==1 )
-	            res = matrix_mul(res, a);
-	        a = matrix_mul(a, a);
-	        pow /= 2;
-	    }
-	    
-	    return res;
+    while( pow>0 ) {
+        if( (pow&1)==1 )
+            res = matrix_mul(res, a);
+        a = matrix_mul(a, a);
+        pow /= 2;
+    }
+    
+    return res;
 	}
 	
 	static long[][] matrix_mul(long[][] a, long[][] b) {
