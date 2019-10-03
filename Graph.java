@@ -30,6 +30,75 @@ class AdjacencyMatrix<T> {
 }
 
 /*
+  UNWEIGHTED GRAPH
+  T: data type of vertex
+  0 is index of first node.
+*/
+import java.util.*;
+class Node {
+    int index;
+    Node(int i) {index=i;}
+}
+class Graph<T> {
+  int V, E;
+  protected T[] nodeList;
+  protected LinkedList<T>[] g;
+  private boolean isDirected;
+
+  Graph(T[] nodeList, int vertexCount, int edgeCount, boolean isDirected) {
+    V = vertexCount;
+    E = edgeCount;
+
+    g = new LinkedList[V];
+    for(int i=0;i<V;i++) g[i] = new LinkedList<T>();
+
+    this.nodeList = nodeList;
+    this.isDirected = isDirected;
+  }
+
+  void connect(int indexSource, int indexDestination) {
+    g[indexSource].add(nodeList[indexDestination]);
+    if(!isDirected)
+      g[indexDestination].add(nodeList[indexSource]);
+  }
+
+  LinkedList<T> getChildren(int index) {
+    return g[index];
+  }
+
+  Iterator childrenIterator(int index) {
+      return g[index].iterator();
+  }
+
+  void dfs(int root, boolean[] v) {
+      v[root] = true;
+      Iterator it = g[root].iterator();
+      Node n;
+      while(it.hasNext()) {
+          n = (Node)it.next();
+          if(!v[n.index])
+            dfs(n.index, v);
+      }
+  }
+
+  public String toString() {
+      String res = "";
+    
+      for(int i=0;i<V;i++) {
+          res = res + i+": ";
+          Iterator it = childrenIterator(i);
+          while(it.hasNext())
+            res = res + ((Node)(it.next())).index+" ";
+          res = res + "\n";
+      }
+      
+      return res;
+  }
+}
+
+
+/*
+  WEIGHTED GRAPH
   T: data type of vertex
   U: data type of weight
 */
