@@ -1,5 +1,16 @@
 class Search {
 
+ // returns index of first element that is equal to key
+  static int bsearch_first(int[] a, int key, int low, int high) {
+    int mid;
+    while(high-low>1) {
+      mid = low+(high-low)/2;
+      if(a[mid]<key) low=mid+1;
+      else if(a[mid]>key) low=mid-1;
+      else high=mid;
+    }
+  }
+
   // returns index of first element greater than or equal to key
   static int bsearch_ceil(int[] a, int key, int low, int high) {
     int mid;
